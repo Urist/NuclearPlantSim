@@ -537,6 +537,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114282193381268676, guid: 85fdc5e2c02d3bd42b2252ef7e2646c8,
+        type: 3}
+      propertyPath: neutronPopulation
+      value: 1000000
+      objectReference: {fileID: 0}
     - target: {fileID: 2812742305511052805, guid: 85fdc5e2c02d3bd42b2252ef7e2646c8,
         type: 3}
       propertyPath: m_Name
