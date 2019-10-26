@@ -1,36 +1,42 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommonPartController : MonoBehaviour
+public class CameraScroll : MonoBehaviour
 {
-    const string DEFAULT_SORT_LAYER = "Default";
-    const string DRAG_SORT_LAYER = "Drag";
-
-    const float GRID_SIZE = 0.2f;
+    private GameObject mainCamera;
 
     private Vector3 offset;
     private Vector3 startPosition;
+
     private bool isDragging = false;
+
+    void Start()
+    {
+        mainCamera = GameObject.Find("Main Camera");
+    }
 
     void OnMouseDown()
     {
         // Save the starting position so it can be restored if necessary.
         // Vector3 is a struct which is a value type, so the '=' operation is a copy.
-        startPosition = transform.position;
+        startPosition = mainCamera.transform.position;
         isDragging = true;
         // Save the offset of the mouse on the object (otherwise the object snaps to where the mouse is).
-        offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - mainCamera.transform.position;
         // Raise the dragged object above others, so you can see where you're dragging it.
-        GetComponent<SpriteRenderer>().sortingLayerName = DRAG_SORT_LAYER;
     }
       
     void OnMouseDrag()
     {
         // Move the object, keeping it's z position unchanged.
-        Vector3 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
-        transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+        Vector3 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - offset;
+        
+        // TODO: Camera scrolling works, but is currently backwards. Fix that before enabling it.
+        // mainCamera.transform.position = new Vector3(newPosition.x, newPosition.y, mainCamera.transform.position.z);
+
+        // Save the offset of the mouse on the object (otherwise the object snaps to where the mouse is).
+        offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - mainCamera.transform.position;
     }
 
     void OnMouseUp()
@@ -61,27 +67,13 @@ public class CommonPartController : MonoBehaviour
     {
         if (isDragging)
         {
-            if (keepPosition)
-            {
-                // Check if offset is needed
-                float xsize = GetComponent<SpriteRenderer>().bounds.size.x;
-                // Snap to grid
-                transform.position = new Vector3(
-                        GRID_SIZE * (float)Math.Round(transform.position.x / GRID_SIZE),
-                        GRID_SIZE * (float)Math.Round(transform.position.y / GRID_SIZE),
-                        transform.position.z);
-            }
-            else
+            if (keepPosition == false)
             {
                 // Restore to starting point
-                transform.position = startPosition;
+                mainCamera.transform.position = startPosition;
             }
 
             isDragging = false;
-
-            // Restore it to the normal layer.
-            GetComponent<SpriteRenderer>().sortingLayerName = DEFAULT_SORT_LAYER;
         }
     }
-
 }

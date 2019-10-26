@@ -80,6 +80,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb98534e6a3502d45b714d722f28b0c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  neutronPopulation: 0
+  effectiveMultiplicationFactor: 0
+  THERMAL_FISSION_FACTOR: 1.65
+  THERMAL_ULTILIZATION_FACTOR: 0.71
+  RESONANCE_ESCAPE_PROBABILITY: 0.87
+  FAST_FISSION_FACTOR: 1.02
+  FAST_NONLEAKAGE_PROBABILITY: 0.97
+  THERMAL_NONLEAKAGE_PROBABILITY: 0.99
 --- !u!212 &2812742305511052806
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -169,7 +177,7 @@ BoxCollider2D:
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   serializedVersion: 2
   m_Size: {x: 6, y: 8}
   m_EdgeRadius: 0
