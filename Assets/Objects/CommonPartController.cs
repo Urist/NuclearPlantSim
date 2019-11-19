@@ -14,6 +14,10 @@ public class CommonPartController : MonoBehaviour
     private Vector3 startPosition;
     private bool isDragging = false;
 
+    ///
+    /// Event Handlers
+    ///
+
     void OnMouseDown()
     {
         // Save the starting position so it can be restored if necessary.
@@ -56,6 +60,19 @@ public class CommonPartController : MonoBehaviour
             Drop(false);
         }
     }
+
+    ///
+    /// Custom Callbacks
+    ///
+
+    public void Create()
+    {
+        Debug.Log($"Create '{this.name}'");
+    }
+
+    ///
+    /// Privates
+    ///
 
     private void Drop(bool keepPosition)
     {
