@@ -1082,10 +1082,5 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 61110525236471044, guid: 3c7e6246f7e6ee049a03d4c3aaf556ff,
-        type: 3}
-      propertyPath: m_SpriteTilingProperty.drawMode
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c7e6246f7e6ee049a03d4c3aaf556ff, type: 3}
