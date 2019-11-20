@@ -67,7 +67,7 @@ public class CommonPartController : MonoBehaviour
 
     public void Create()
     {
-        Debug.Log($"Create '{this.name}'");
+        Instantiate(this, Camera.main.transform, true);
     }
 
     ///
