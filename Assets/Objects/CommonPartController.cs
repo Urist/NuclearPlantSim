@@ -8,7 +8,7 @@ public class CommonPartController : MonoBehaviour
     const string DEFAULT_SORT_LAYER = "Default";
     const string DRAG_SORT_LAYER = "Drag";
 
-    const float GRID_SIZE = 0.2f;
+    const float GRID_SIZE = 1.0f;
 
     private Vector3 offset;
     private Vector3 startPosition;
@@ -17,6 +17,11 @@ public class CommonPartController : MonoBehaviour
     ///
     /// Event Handlers
     ///
+
+    void Awake()
+    {
+        SnapToGrid();
+    }
 
     void OnMouseDown()
     {
@@ -82,11 +87,9 @@ public class CommonPartController : MonoBehaviour
             {
                 // Check if offset is needed
                 float xsize = GetComponent<SpriteRenderer>().bounds.size.x;
-                // Snap to grid
-                transform.position = new Vector3(
-                        GRID_SIZE * (float)Math.Round(transform.position.x / GRID_SIZE),
-                        GRID_SIZE * (float)Math.Round(transform.position.y / GRID_SIZE),
-                        transform.position.z);
+
+                SnapToGrid();
+
             }
             else
             {
@@ -99,6 +102,15 @@ public class CommonPartController : MonoBehaviour
             // Restore it to the normal layer.
             GetComponent<SpriteRenderer>().sortingLayerName = DEFAULT_SORT_LAYER;
         }
+    }
+
+    private void SnapToGrid()
+    {
+        // Snap to grid
+        transform.position = new Vector3(
+                GRID_SIZE * (float)Math.Round(transform.position.x / GRID_SIZE),
+                GRID_SIZE * (float)Math.Round(transform.position.y / GRID_SIZE),
+                transform.position.z);
     }
 
 }
