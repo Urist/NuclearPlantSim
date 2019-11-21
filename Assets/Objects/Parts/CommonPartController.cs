@@ -72,7 +72,12 @@ public class CommonPartController : MonoBehaviour
 
     public void Create()
     {
-        Debug.Log($"Create '{this.name}'");
+        Vector3 position = new Vector3(
+            Camera.main.transform.position.x,
+            Camera.main.transform.position.y,
+            0);
+
+        Instantiate(this.gameObject, position, Quaternion.identity); 
     }
 
     ///
@@ -85,11 +90,7 @@ public class CommonPartController : MonoBehaviour
         {
             if (keepPosition)
             {
-                // Check if offset is needed
-                float xsize = GetComponent<SpriteRenderer>().bounds.size.x;
-
                 SnapToGrid();
-
             }
             else
             {
@@ -106,10 +107,18 @@ public class CommonPartController : MonoBehaviour
 
     private void SnapToGrid()
     {
+        // Calulate grid offset
+        float xsize = GetComponent<SpriteRenderer>().bounds.size.x;
+        float ysize = GetComponent<SpriteRenderer>().bounds.size.y;
+
+        // ASSUME: x and y sizes are integers.
+        float xOffset = xsize % 2 == 0 ? GRID_SIZE * 0.5f : 0;
+        float yOffset = ysize % 2 == 0 ? GRID_SIZE * 0.5f : 0;
+
         // Snap to grid
         transform.position = new Vector3(
-                GRID_SIZE * (float)Math.Round(transform.position.x / GRID_SIZE),
-                GRID_SIZE * (float)Math.Round(transform.position.y / GRID_SIZE),
+                xOffset + GRID_SIZE * (float)Math.Round(transform.position.x / GRID_SIZE),
+                yOffset + GRID_SIZE * (float)Math.Round(transform.position.y / GRID_SIZE),
                 transform.position.z);
     }
 
