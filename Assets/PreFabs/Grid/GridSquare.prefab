@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 7358871696094674846}
   - component: {fileID: 2159178397975961301}
   - component: {fileID: 114646524472660010}
+  - component: {fileID: 114758841899031012}
   m_Layer: 0
-  m_Name: Grid - Background
+  m_Name: GridSquare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +99,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.2, y: 0.2}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -117,5 +118,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 319999554de8d024787848f44a53a157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114758841899031012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7358871696094674847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd87ecc9a01d2845a7ce36cdf7230ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
