@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2756239004659459430}
   - component: {fileID: 2756239004659459353}
+  - component: {fileID: 114081367891705220}
   m_Layer: 0
   m_Name: GridManager
-  m_TagString: Untagged
+  m_TagString: GridManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,3 +44,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9073fc612cc922b49b8956c1516cc371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridSquare: {fileID: 0}
+  devSprite: {fileID: 21300000, guid: a5e9ec99c66f93544a3982ea754e8983, type: 3}
+  occupationSprite: {fileID: 21300000, guid: 47aaa2ec26438cf40860668d0b6c1116, type: 3}
+  rowCount: 0
+  colCount: 0
+--- !u!114 &114081367891705220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2756239004659459352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f46bc94b4e0c2a149a2eff5a0f64f5b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linkedUiDropdown: {fileID: 8174429609511670615, guid: f3e3af56070d8224a97eab5c880979fb,
+    type: 3}

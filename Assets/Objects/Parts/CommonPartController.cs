@@ -8,7 +8,7 @@ public class CommonPartController : MonoBehaviour
     const string DEFAULT_SORT_LAYER = "Default";
     const string DRAG_SORT_LAYER = "Drag";
 
-    const float GRID_SIZE = 0.2f;
+    const float GRID_SIZE = 1.0f;
 
     private Vector3 offset;
     private Vector3 startPosition;
@@ -17,6 +17,11 @@ public class CommonPartController : MonoBehaviour
     ///
     /// Event Handlers
     ///
+
+    void Awake()
+    {
+        SnapToGrid();
+    }
 
     void OnMouseDown()
     {
@@ -67,7 +72,12 @@ public class CommonPartController : MonoBehaviour
 
     public void Create()
     {
-        Instantiate(this, Camera.main.transform, true);
+        Vector3 position = new Vector3(
+            Camera.main.transform.position.x,
+            Camera.main.transform.position.y,
+            0);
+
+        Instantiate(this.gameObject, position, Quaternion.identity); 
     }
 
     ///
@@ -80,13 +90,7 @@ public class CommonPartController : MonoBehaviour
         {
             if (keepPosition)
             {
-                // Check if offset is needed
-                float xsize = GetComponent<SpriteRenderer>().bounds.size.x;
-                // Snap to grid
-                transform.position = new Vector3(
-                        GRID_SIZE * (float)Math.Round(transform.position.x / GRID_SIZE),
-                        GRID_SIZE * (float)Math.Round(transform.position.y / GRID_SIZE),
-                        transform.position.z);
+                SnapToGrid();
             }
             else
             {
@@ -99,6 +103,23 @@ public class CommonPartController : MonoBehaviour
             // Restore it to the normal layer.
             GetComponent<SpriteRenderer>().sortingLayerName = DEFAULT_SORT_LAYER;
         }
+    }
+
+    private void SnapToGrid()
+    {
+        // Calulate grid offset
+        float xsize = GetComponent<SpriteRenderer>().bounds.size.x;
+        float ysize = GetComponent<SpriteRenderer>().bounds.size.y;
+
+        // ASSUME: x and y sizes are integers.
+        float xOffset = xsize % 2 == 0 ? GRID_SIZE * 0.5f : 0;
+        float yOffset = ysize % 2 == 0 ? GRID_SIZE * 0.5f : 0;
+
+        // Snap to grid
+        transform.position = new Vector3(
+                xOffset + GRID_SIZE * (float)Math.Round(transform.position.x / GRID_SIZE),
+                yOffset + GRID_SIZE * (float)Math.Round(transform.position.y / GRID_SIZE),
+                transform.position.z);
     }
 
 }
