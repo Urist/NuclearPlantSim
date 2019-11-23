@@ -23,7 +23,7 @@ public class GridUiInit : MonoBehaviour
 
         linkedUiDropdown.ClearOptions();
 
-        List<string> options = new List<string>(Enum.GetNames(typeof(GridManager.GridState)));
+        List<string> options = new List<string>(Enum.GetNames(typeof(GridState)));
         linkedUiDropdown.AddOptions(options);
 
     }

@@ -18,9 +18,10 @@ public class CommonPartController : MonoBehaviour
     /// Event Handlers
     ///
 
-    void Awake()
+    void Start()
     {
         SnapToGrid();
+        UpdateOccupiedGridArea();
     }
 
     void OnMouseDown()
@@ -32,7 +33,7 @@ public class CommonPartController : MonoBehaviour
         // Save the offset of the mouse on the object (otherwise the object snaps to where the mouse is).
         offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         // Raise the dragged object above others, so you can see where you're dragging it.
-        GetComponent<SpriteRenderer>().sortingLayerName = DRAG_SORT_LAYER;
+        renderer.sortingLayerName = DRAG_SORT_LAYER;
     }
       
     void OnMouseDrag()
@@ -91,6 +92,7 @@ public class CommonPartController : MonoBehaviour
             if (keepPosition)
             {
                 SnapToGrid();
+                UpdateOccupiedGridArea();
             }
             else
             {
@@ -101,15 +103,15 @@ public class CommonPartController : MonoBehaviour
             isDragging = false;
 
             // Restore it to the normal layer.
-            GetComponent<SpriteRenderer>().sortingLayerName = DEFAULT_SORT_LAYER;
+            renderer.sortingLayerName = DEFAULT_SORT_LAYER;
         }
     }
 
     private void SnapToGrid()
     {
         // Calulate grid offset
-        float xsize = GetComponent<SpriteRenderer>().bounds.size.x;
-        float ysize = GetComponent<SpriteRenderer>().bounds.size.y;
+        float xsize = renderer.bounds.size.x;
+        float ysize = renderer.bounds.size.y;
 
         // ASSUME: x and y sizes are integers.
         float xOffset = xsize % 2 == 0 ? GRID_SIZE * 0.5f : 0;
@@ -120,6 +122,41 @@ public class CommonPartController : MonoBehaviour
                 xOffset + GRID_SIZE * (float)Math.Round(transform.position.x / GRID_SIZE),
                 yOffset + GRID_SIZE * (float)Math.Round(transform.position.y / GRID_SIZE),
                 transform.position.z);
+
+    }
+
+    private void UpdateOccupiedGridArea()
+    {
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (isDragging)
+        {
+            // Clear start area
+            float xsize = spriteRenderer.bounds.size.x;
+            float ysize = spriteRenderer.bounds.size.y;
+
+            Rect area = new Rect(
+                (float)Math.Ceiling(startPosition.x - xsize / 2.0f),
+                (float)Math.Ceiling(startPosition.y - ysize / 2.0f),
+                xsize,
+                ysize);
+
+            GridManager.Instance.SetGridOccupationStatus(area, false);
+
+        }
+
+        // Occupy current area
+        float xsize = spriteRenderer.bounds.size.x;
+        float ysize = spriteRenderer.bounds.size.y;
+
+        Rect area = new Rect(
+            (float)Math.Ceiling(transform.position.x - xsize / 2.0f),
+            (float)Math.Ceiling(transform.position.y - ysize / 2.0f),
+            xsize,
+            ysize);
+
+        GridManager.Instance.SetGridOccupationStatus(area, true);
+
     }
 
 }

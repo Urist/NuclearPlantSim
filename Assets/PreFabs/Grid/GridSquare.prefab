@@ -132,3 +132,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd87ecc9a01d2845a7ce36cdf7230ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  devSprite: {fileID: 21300000, guid: a5e9ec99c66f93544a3982ea754e8983, type: 3}
+  occupationSprite: {fileID: 21300000, guid: 47aaa2ec26438cf40860668d0b6c1116, type: 3}
