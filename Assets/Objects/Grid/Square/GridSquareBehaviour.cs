@@ -5,4 +5,5 @@ using UnityEngine;
 public class GridSquareBehaviour : MonoBehaviour
 {
     public bool occupied;
+    public float temperature;
 }

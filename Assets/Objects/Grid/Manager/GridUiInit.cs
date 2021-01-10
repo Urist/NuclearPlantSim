@@ -8,6 +8,10 @@ public class GridUiInit : MonoBehaviour
 {
     public Dropdown linkedUiDropdown;
 
+    ///
+    /// Event Handlers
+    ///
+
     void Awake()
     {
         // FUTURE: Unity 2019
@@ -27,4 +31,5 @@ public class GridUiInit : MonoBehaviour
         linkedUiDropdown.AddOptions(options);
 
     }
+
 }
