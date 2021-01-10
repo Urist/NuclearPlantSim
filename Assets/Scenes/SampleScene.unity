@@ -1076,6 +1076,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: GridManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2756239004659459353, guid: 10f929572b9422c47a9540c01db60c90,
+        type: 3}
+      propertyPath: gridSquare
+      value: 
+      objectReference: {fileID: 7358871696094674847, guid: f8a2ca5707c85b248b84d4792b6b04a7,
+        type: 3}
+    - target: {fileID: 2756239004659459353, guid: 10f929572b9422c47a9540c01db60c90,
+        type: 3}
+      propertyPath: rowCount
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2756239004659459353, guid: 10f929572b9422c47a9540c01db60c90,
+        type: 3}
+      propertyPath: colCount
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2756239004659459353, guid: 10f929572b9422c47a9540c01db60c90,
+        type: 3}
+      propertyPath: ambientTemperature
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2756239004659459430, guid: 10f929572b9422c47a9540c01db60c90,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1130,22 +1151,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2756239004659459353, guid: 10f929572b9422c47a9540c01db60c90,
-        type: 3}
-      propertyPath: gridSquare
-      value: 
-      objectReference: {fileID: 7358871696094674847, guid: f8a2ca5707c85b248b84d4792b6b04a7,
-        type: 3}
-    - target: {fileID: 2756239004659459353, guid: 10f929572b9422c47a9540c01db60c90,
-        type: 3}
-      propertyPath: rowCount
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2756239004659459353, guid: 10f929572b9422c47a9540c01db60c90,
-        type: 3}
-      propertyPath: colCount
-      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10f929572b9422c47a9540c01db60c90, type: 3}
