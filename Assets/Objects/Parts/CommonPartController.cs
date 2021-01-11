@@ -14,15 +14,6 @@ public class CommonPartController : MonoBehaviour
     private Vector3 startPosition;
     private bool isDragging = false;
 
-    private GridManager _gridManager = null;
-    private GridManager gridManager {
-        get {
-            if (_gridManager == null) {
-                _gridManager = GameObject.FindWithTag("GridManager").GetComponent<GridManager>();
-            }
-            return _gridManager;
-        }
-    }
 
     ///
     /// Event Handlers
@@ -44,14 +35,9 @@ public class CommonPartController : MonoBehaviour
         offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         // Raise the dragged object above others, so you can see where you're dragging it.
         GetComponent<Renderer>().sortingLayerName = DRAG_SORT_LAYER;
-        // Set grid occupation status
-        gridManager.SetOccupation(
-            GetOrigin(),
-            GetSize(),
-            false
-        );
+        UpdateOccupiedGridArea();
     }
-      
+
     void OnMouseDrag()
     {
         // Move the object, keeping it's z position unchanged.
@@ -61,7 +47,7 @@ public class CommonPartController : MonoBehaviour
 
     void OnMouseUp()
     {
-        // Drag ended. 
+        // Drag ended.
         Drop(true);
     }
 
@@ -94,7 +80,7 @@ public class CommonPartController : MonoBehaviour
             Camera.main.transform.position.y,
             0);
 
-        Instantiate(this.gameObject, position, Quaternion.identity); 
+        Instantiate(this.gameObject, position, Quaternion.identity);
     }
 
     ///
@@ -105,10 +91,9 @@ public class CommonPartController : MonoBehaviour
     {
         if (isDragging)
         {
-            if (keepPosition && gridManager.GridIsFree(GetOrigin(), GetSize()))
+            if (keepPosition && GridManager.Instance.GridIsFree(GetOrigin(), GetSize()))
             {
                 SnapToGrid();
-                UpdateOccupiedGridArea();
             }
             else
             {
@@ -120,13 +105,7 @@ public class CommonPartController : MonoBehaviour
 
             // Restore it to the normal layer.
             GetComponent<Renderer>().sortingLayerName = DEFAULT_SORT_LAYER;
-
-            // Set grid occupation status
-            gridManager.SetOccupation(
-                GetOrigin(),
-                GetSize(),
-                true
-            );
+            UpdateOccupiedGridArea();
         }
     }
 
@@ -150,39 +129,33 @@ public class CommonPartController : MonoBehaviour
 
     private void UpdateOccupiedGridArea()
     {
-        var spriteRenderer = GetComponent<SpriteRenderer>();
-
-        float xsize = spriteRenderer.bounds.size.x;
-        float ysize = spriteRenderer.bounds.size.y;
+        var spriteRenderer = GetComponent<Renderer>();
 
         if (isDragging)
         {
             // Clear start area
-            Rect startArea = new Rect(
-                (float)Math.Ceiling(startPosition.x - xsize / 2.0f),
-                (float)Math.Ceiling(startPosition.y - ysize / 2.0f),
-                xsize,
-                ysize);
-
-            GridManager.Instance.SetGridOccupationStatus(startArea, false);
+            GridManager.Instance.SetOccupation(
+                GetOrigin(),
+                GetSize(),
+                false
+            );
 
         }
-
-        // Occupy current area
-        Rect currentArea = new Rect(
-            (float)Math.Ceiling(transform.position.x - xsize / 2.0f),
-            (float)Math.Ceiling(transform.position.y - ysize / 2.0f),
-            xsize,
-            ysize);
-
-        GridManager.Instance.SetGridOccupationStatus(currentArea, true);
-
+        else
+        {
+            // Occupy current area
+            GridManager.Instance.SetOccupation(
+                GetOrigin(),
+                GetSize(),
+                true
+        );
+        }
     }
 
     private GridPoint GetOrigin()
     {
-        float xsize = GetComponent<SpriteRenderer>().bounds.size.x;
-        float ysize = GetComponent<SpriteRenderer>().bounds.size.y;
+        float xsize = GetComponent<Renderer>().bounds.size.x;
+        float ysize = GetComponent<Renderer>().bounds.size.y;
 
         return new GridPoint(
             (int)Math.Round(((transform.position.x-0.5) / GRID_SIZE) - (xsize/2))+1,
@@ -192,7 +165,7 @@ public class CommonPartController : MonoBehaviour
 
     private GridSize GetSize()
     {
-        return GridSize.FromVec(GetComponent<SpriteRenderer>().bounds.size);
+        return GridSize.FromVec(GetComponent<Renderer>().bounds.size);
     }
 
 }

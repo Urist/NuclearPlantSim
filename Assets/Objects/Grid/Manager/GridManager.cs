@@ -31,6 +31,10 @@ public class GridManager : MonoBehaviour
 
     public GameObject gridSquare;
 
+    public Sprite devSprite;
+
+    public Sprite occupationSprite;
+
     public int rowCount;
     public int colCount;
 
@@ -172,27 +176,12 @@ public class GridManager : MonoBehaviour
     }
 
     ///
-    /// Publics
-    ///
-    
-    public void SetGridOccupationStatus(Rect region, bool occupationStatus)
-    {
-        for (int x = (int)region.x; x < (int)region.xMax; x++)
-        {
-            for (int y = (int)region.y; y < (int)region.yMax; y++)
-            {
-                grid[x,y].GetComponent<GridSquareBehaviour>().Occupied = occupationStatus;
-            }
-        }
-    }
-
-    ///
     /// Privates
     ///
 
     private void CreateGameGrid()
     {
-        grid = new GameObject[rowCount, colCount];
+        grid = new GameObject[colCount, rowCount];
         for (int c = 0; c < colCount; c++)
         {
             for (int r = 0; r < rowCount; r++)
@@ -200,7 +189,7 @@ public class GridManager : MonoBehaviour
                 var newObj = Instantiate(gridSquare, new Vector3(c, r, 0), Quaternion.identity);
                 newObj.transform.SetParent(this.transform);
                 newObj.GetComponent<GridSquareBehaviour>().temperature = ambientTemperature;
-                grid[r,c] = newObj;
+                grid[c,r] = newObj;
             }
         }
     }
