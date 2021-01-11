@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 4059247633223760024}
   temperature: 0
-  temperature_step_down: 4
+  temperature_step_down: 8
   maxTemp: 0
   ambientTemp: 15
 --- !u!212 &4059247633223760030

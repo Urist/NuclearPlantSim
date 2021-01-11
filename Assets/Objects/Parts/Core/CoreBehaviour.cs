@@ -6,12 +6,8 @@ public class CoreBehaviour : MonoBehaviour
 {
     public Animator anim;
 
-    public int temperature;
     public int temperature_step_up;
-    public int temperature_step_down;
-    public int temperature_transfer_rate;
     public int maxTemp;
-    public int ambientTemp;
 
     public enum CoreState
     {
@@ -32,20 +28,6 @@ public class CoreBehaviour : MonoBehaviour
     {
         int tempDelta = 0;
 
-        if (temperature > ambientTemp)
-        {
-            tempDelta -= temperature_step_down;
-        }
-
-        foreach (var heatsink in GameObject.FindGameObjectsWithTag("HeatSink"))
-        {
-            if (temperature > ambientTemp)
-            {
-                tempDelta -= temperature_transfer_rate;
-                (heatsink.GetComponent<HeatVentBehaviour>()).temperature += temperature_transfer_rate;
-            }
-        }
-
         switch (state)
         {
             case CoreState.Running:
@@ -55,12 +37,12 @@ public class CoreBehaviour : MonoBehaviour
             break;
         }
 
-        temperature = temperature + tempDelta;
+        GridManager.Instance.AddHeat(this, tempDelta);
 
         switch (state)
         {
             case CoreState.Running:
-                if (temperature > maxTemp)
+                if (GridManager.Instance.GetMaxTemp(this) > maxTemp)
                 {
                     state = CoreState.Exploded;
                     anim.Play("core_explode");

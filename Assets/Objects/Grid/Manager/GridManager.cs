@@ -43,7 +43,11 @@ public class GridManager : MonoBehaviour
     public float ambientTemperature;
 
     /// Script internal variables
-    private GameObject[,] grid;
+    public GameObject[,] grid
+    {
+        private set;
+        get;
+    }
 
     ///
     /// Event Handlers
@@ -73,6 +77,8 @@ public class GridManager : MonoBehaviour
         {
             ChangeOverlay((int)GridState.Temperature);
         }
+
+        UpdateOverlay();
     }
 
     ///
@@ -94,6 +100,37 @@ public class GridManager : MonoBehaviour
                 gridSprite.gameObject.GetComponent<GridSquareBehaviour>().occupied
                 ? Color.red : Color.green;
         }
+    }
+
+    public void AddHeat(MonoBehaviour part, float tempEmitted)
+    {
+        var partController = part.GetComponent<CommonPartController>();
+        var point = partController.GetOrigin();
+        var size = partController.GetSize();
+        for(int x = point.x; x < point.x+size.x; x++)
+        {
+            for(int y = point.y; y < point.y+size.y; y++)
+            {
+                grid[x,y].GetComponent<GridSquareBehaviour>().temperature += tempEmitted;
+            }
+        }
+    }
+
+    public float GetMaxTemp(MonoBehaviour part)
+    {
+        var partController = part.GetComponent<CommonPartController>();
+        var point = partController.GetOrigin();
+        var size = partController.GetSize();
+        float maxTemp = Single.MinValue;
+        for(int x = point.x; x < point.x+size.x; x++)
+        {
+            for(int y = point.y; y < point.y+size.y; y++)
+            {
+                if (grid[x,y].GetComponent<GridSquareBehaviour>().temperature > maxTemp)
+                    maxTemp = grid[x,y].GetComponent<GridSquareBehaviour>().temperature;
+            }
+        }
+        return maxTemp;
     }
 
     public bool GridIsFree(GridPoint point, GridSize size)
@@ -127,6 +164,13 @@ public class GridManager : MonoBehaviour
             throw new Exception("Callback called on inactive object. Is it linked to a prefab?");
 
         selectedState = (GridState)selection;
+    }
+
+    ///
+    /// Privates
+    ///
+
+    private void UpdateOverlay() {
         switch (selectedState)
         {
             case GridState.Dev:
@@ -174,10 +218,6 @@ public class GridManager : MonoBehaviour
                 break;
         }
     }
-
-    ///
-    /// Privates
-    ///
 
     private void CreateGameGrid()
     {

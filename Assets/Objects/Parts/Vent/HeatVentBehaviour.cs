@@ -20,10 +20,8 @@ public class HeatVentBehaviour : MonoBehaviour
     // Use FixedUpdate for simulation
     void FixedUpdate()
     {
-        if (temperature > ambientTemp)
-        {
-            temperature -= temperature_step_down;
-        }
+        GridManager.Instance.AddHeat(this, -1*temperature_step_down);
+        temperature = (int)GridManager.Instance.GetMaxTemp(this);
 
         anim.SetInteger("temp", temperature);
     }

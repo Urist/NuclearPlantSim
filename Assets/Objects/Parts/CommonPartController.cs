@@ -84,6 +84,26 @@ public class CommonPartController : MonoBehaviour
     }
 
     ///
+    /// Publics
+    ///
+
+    public GridPoint GetOrigin()
+    {
+        float xsize = GetComponent<Renderer>().bounds.size.x;
+        float ysize = GetComponent<Renderer>().bounds.size.y;
+
+        return new GridPoint(
+            (int)Math.Round(((transform.position.x-0.5) / GRID_SIZE) - (xsize/2))+1,
+            (int)Math.Round(((transform.position.y-0.5) / GRID_SIZE) - (ysize/2))+1
+        );
+    }
+
+    public GridSize GetSize()
+    {
+        return GridSize.FromVec(GetComponent<Renderer>().bounds.size);
+    }
+
+    ///
     /// Privates
     ///
 
@@ -150,22 +170,6 @@ public class CommonPartController : MonoBehaviour
                 true
         );
         }
-    }
-
-    private GridPoint GetOrigin()
-    {
-        float xsize = GetComponent<Renderer>().bounds.size.x;
-        float ysize = GetComponent<Renderer>().bounds.size.y;
-
-        return new GridPoint(
-            (int)Math.Round(((transform.position.x-0.5) / GRID_SIZE) - (xsize/2))+1,
-            (int)Math.Round(((transform.position.y-0.5) / GRID_SIZE) - (ysize/2))+1
-        );
-    }
-
-    private GridSize GetSize()
-    {
-        return GridSize.FromVec(GetComponent<Renderer>().bounds.size);
     }
 
 }
